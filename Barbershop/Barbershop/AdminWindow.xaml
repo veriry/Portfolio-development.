@@ -1,0 +1,565 @@
+﻿<Window x:Class="Barbershop.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Barbershop"
+        mc:Ignorable="d"
+        Title="Администратор" 
+        Width="1400"
+        Height="850"
+        MinWidth="1100"
+        MinHeight="700"
+        WindowStartupLocation="CenterScreen"
+        Background="White">
+
+    <Window.Resources>
+
+        <!-- Базовые цвета (светлая тема) -->
+        <SolidColorBrush x:Key="PrimaryBackground" Color="White" />
+        <SolidColorBrush x:Key="SecondaryBackground" Color="#F5F5F5" />
+        <SolidColorBrush x:Key="PrimaryText" Color="#1A1A1A" />
+        <SolidColorBrush x:Key="SecondaryText" Color="#666666" />
+        <SolidColorBrush x:Key="BorderColor" Color="#E0E0E0" />
+        <SolidColorBrush x:Key="SeparatorColor" Color="#E0E0E0" />
+
+        <!-- Акцентный цвет (тёмный для контраста) -->
+        <SolidColorBrush x:Key="AccentColor" Color="#2C3E50" />
+        <SolidColorBrush x:Key="AccentHoverBrush" Color="#34495E" />
+        <SolidColorBrush x:Key="AccentPressedBrush" Color="#1A252F" />
+
+        <!-- Фон для полей ввода -->
+        <SolidColorBrush x:Key="BgInput" Color="White" />
+
+        <!-- Стили бокового меню -->
+        <SolidColorBrush x:Key="SidebarItemBackground" Color="#F5F5F5" />
+        <SolidColorBrush x:Key="SidebarItemHoverBackground" Color="#E8E8E8" />
+        <SolidColorBrush x:Key="SidebarItemSelectedBackground" Color="#D0D0D0" />
+
+        <!-- Стиль окна -->
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
+
+        <!-- Логотип -->
+        <Style x:Key="LogoTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#1A1A1A" />
+            <Setter Property="FontSize" Value="26" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="0,0,0,4" />
+        </Style>
+
+        <!-- Разделитель -->
+        <Style TargetType="Separator">
+            <Setter Property="Margin" Value="0,12" />
+            <Setter Property="Background" Value="#E0E0E0" />
+        </Style>
+
+        <!-- Кнопка меню -->
+        <Style x:Key="SidebarMenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F5F5F5" />
+            <Setter Property="Foreground" Value="#1A1A1A" />
+            <Setter Property="BorderBrush" Value="#E0E0E0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="16,12" />
+            <Setter Property="Margin" Value="0,4,0,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Cursor" Value="Hand" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"
+                                              Margin="0" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="#E8E8E8" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="#D0D0D0" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Кнопка выхода -->
+        <Style x:Key="LogoutButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource SidebarMenuButtonStyle}">
+            <Setter Property="Background"
+                    Value="#2C3E50" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="FontWeight"
+                    Value="SemiBold" />
+            <Setter Property="Margin"
+                    Value="0,12,0,0" />
+        </Style>
+
+        <!-- ========== СТИЛИ ДЛЯ КАЛЕНДАРЯ ========== -->
+
+        <!-- Стиль для кнопок календаря -->
+        <Style x:Key="CalendarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2C3E50" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="12,6" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#34495E" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#1A252F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для кнопок действий (светлая тема) -->
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="#2C3E50" />
+            <Setter Property="BorderBrush" Value="#2C3E50" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="10,8" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2C3E50" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#1A252F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для DatePicker -->
+        <Style TargetType="DatePicker">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="#1A1A1A" />
+            <Setter Property="BorderBrush" Value="#E0E0E0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <!-- Стиль для ComboBox -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="#1A1A1A" />
+            <Setter Property="BorderBrush" Value="#E0E0E0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="#1A1A1A" />
+            <Style.Triggers>
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter Property="Background" Value="#E8E8E8" />
+                    <Setter Property="Foreground" Value="#1A1A1A" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль для DataGrid -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="#1A1A1A" />
+            <Setter Property="BorderBrush" Value="#E0E0E0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="RowBackground" Value="White" />
+            <Setter Property="AlternatingRowBackground" Value="#F9F9F9" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#E0E0E0" />
+            <Setter Property="VerticalGridLinesBrush" Value="Transparent" />
+            <Setter Property="HeadersVisibility" Value="Column" />
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="SelectionMode" Value="Single" />
+            <Setter Property="SelectionUnit" Value="FullRow" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="#1A1A1A" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#2C3E50" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#F5F5F5" />
+            <Setter Property="Foreground" Value="#1A1A1A" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="BorderBrush" Value="#E0E0E0" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="248" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!-- ========== ЛЕВАЯ ПАНЕЛЬ ========== -->
+        <Border Grid.Column="0"
+                Background="#F5F5F5"
+                BorderBrush="#E0E0E0"
+                BorderThickness="0,0,1,0"
+                Padding="15">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Верхняя часть панели (основная навигация) -->
+                <StackPanel Grid.Row="0" Orientation="Vertical">
+                    <TextBlock Text="BARBERSHOP" Style="{StaticResource LogoTextStyle}" />
+                    <TextBlock x:Name="txtUser" Text="Пользователь" Foreground="{StaticResource SecondaryText}" FontSize="14" Margin="0,0,0,2"/>
+                    <TextBlock x:Name="txtRole" Text="Роль" Foreground="{StaticResource SecondaryText}" FontSize="12" Margin="0,0,0,15"/>
+
+                    <Separator />
+
+                    <!-- Существующие кнопки меню (если они есть) размещаются здесь -->
+
+                    <!-- Визуальный разделитель перед кнопками управления записями -->
+                    <TextBlock x:Name="txtManage"
+                               Text="УПРАВЛЕНИЕ" 
+                               Foreground="{StaticResource SecondaryText}" 
+                               FontSize="11" 
+                               FontWeight="Bold" 
+                               Margin="5,15,0,5"
+                               Visibility="Collapsed"/>
+
+                    <!-- Новые вертикальные кнопки действий -->
+                    <Button Content="💾 Сохранить изменения"
+                            Style="{StaticResource SidebarMenuButtonStyle}"
+                            Height="45"
+                            x:Name="SaveAllButton"
+                            Click="SaveAllButton_Click" 
+                            Visibility="Collapsed"/>
+
+                    <Button Content="🚫 Отменить запись"
+                            Style="{StaticResource SidebarMenuButtonStyle}"
+                            Height="45"
+                            x:Name="CancelVisitButton"
+                            Click="CancelVisitButton_Click" 
+                            Visibility="Collapsed"/>
+
+                    <Button Content="🗑 Удалить запись"
+                            Style="{StaticResource SidebarMenuButtonStyle}"
+                            Height="45"
+                            x:Name="DeleteVisitButton"
+                            Click="DeleteVisitButton_Click" 
+                            Visibility="Collapsed"/>
+                </StackPanel>
+
+                <!-- Нижняя часть панели (Выход) -->
+                <Button Grid.Row="1" 
+                        Content="Выйти" 
+                        Style="{StaticResource LogoutButtonStyle}"
+                        Height="45"
+                        Click="Button_Click"/>
+            </Grid>
+        </Border>
+
+
+        <!-- ========== ПРАВАЯ ОБЛАСТЬ (СВЕТЛАЯ ТЕМА) ========== -->
+        <Border Grid.Column="1"
+                Background="White"
+                Padding="20">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Панель управления календарём и фильтрами -->
+                <Border Grid.Row="0"
+                        Background="#F5F5F5"
+                        CornerRadius="8"
+                        Padding="12"
+                        Margin="0,0,0,10">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Button Content="◀"
+                                Style="{StaticResource CalendarButtonStyle}"
+                                Command="{Binding PreviousDayCommand}" 
+                                Click="PrevDay_Click"/>
+
+                        <DatePicker Margin="10,0"
+                                    SelectedDate="{Binding SelectedDate}" 
+                                    x:Name="MainDatePicker"
+                                    SelectedDateChanged="MainDatePicker_SelectedDateChanged"/>
+
+                        <Button Content="Сегодня"
+                                Style="{StaticResource CalendarButtonStyle}"
+                                Command="{Binding TodayCommand}" 
+                                Click="Today_Click"/>
+
+                        <Button Content="▶"
+                                Margin="10,0,0,0"
+                                Style="{StaticResource CalendarButtonStyle}"
+                                Command="{Binding NextDayCommand}" 
+                                Click="NextDay_Click" />
+
+
+
+                        <!-- 2. Направление сортировки времени (Использует статические элементы) -->
+                        <ComboBox Margin="10,0,0,0"
+                                  Name="Sort"
+                                  Width="200"
+                                  SelectedIndex="0"
+                                  SelectionChanged="SortComboBox_SelectionChanged">
+                            <ComboBoxItem Content="По возрастанию времени"/>
+                            <ComboBoxItem Content="По убыванию времени"/>
+                        </ComboBox>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- Панель с кнопками действий -->
+                <Border Grid.Row="1"
+                        Background="#F5F5F5"
+                        CornerRadius="8"
+                        Padding="12"
+                        Margin="0,0,0,10">
+
+                    <WrapPanel>
+
+                        <Button Content="✏ Редактировать запись"
+                                Name="CustomBtn"
+                                Width="180"
+                                Visibility="Visible"
+                                Margin="0,0,10,0"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Command="{Binding EditAppointmentCommand}" 
+                                Click="EditAppointment_Click"/>
+
+                        <Button Content="👤 Карточка клиента"
+                                Name="ClientBtn"
+                                Width="180"
+                                Margin="0,0,10,0"
+                                Visibility="Visible"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Command="{Binding OpenClientCommand}" 
+                                Click="ClientBtn_Click" />
+
+                        <Button Content="📋 Справочник клиентов"
+                                Name="BooKclient"
+                                Width="180"
+                                Margin="0,0,10,0"
+                                Visibility="Visible"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Command="{Binding OpenClientsDirectoryCommand}" 
+                                Click="BooKclient_Click" />
+
+                        <Button Content="➕ Добавить клиента"
+                                x:Name="AddClientButton"
+                                Width="180"
+                                Margin="0,0,10,0"
+                                Visibility="Visible"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Command="{Binding FinancialReportCommand}" 
+                                Click="AddClientButton_Click"/>
+
+                        <Button Content="📊 Финансовый отчёт"
+                                x:Name="FinancialReport"
+                                Width="180"
+                                Margin="0,0,10,0"
+                                Visibility="Visible"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Command="{Binding FinancialReportCommand}" 
+                                Click="FinancialReport_Click" />
+
+                        <Button Content="Назад"
+                                x:Name="Exit"
+                                Visibility="Collapsed"
+                                Width="100"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Command="{Binding FinancialReportCommand}" 
+                                Click="Button_Click_1" />
+                    </WrapPanel>
+                </Border>
+
+                <DataGrid x:Name="ClientsTable"
+                            Grid.Row="2"
+                            AutoGenerateColumns="False"
+                            IsReadOnly="True"
+                            Visibility="Collapsed">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="ID"
+                            Binding="{Binding ID_Client}"
+                            Width="70"/>
+
+                        <DataGridTextColumn Header="Фамилия"
+                            Binding="{Binding Surname}"
+                            Width="*"/>
+
+                        <DataGridTextColumn Header="Имя"
+                            Binding="{Binding Name}"
+                            Width="*"/>
+
+                        <DataGridTextColumn Header="Отчество"
+                            Binding="{Binding Patronymic}"
+                            Width="*"/>
+
+                        <DataGridTextColumn Header="Телефон"
+                            Binding="{Binding Phone}"
+                            Width="180"/>
+
+                        <DataGridTextColumn Header="Дата рождения"
+                            Binding="{Binding DateOfBirth}"
+                            Width="150"/>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+
+
+
+                <!-- Таблица расписания с выбранной записью -->
+                <DataGrid x:Name="Table"
+                          Grid.Row="2"
+                          ItemsSource="{Binding ScheduleItems}"
+                          SelectedItem="{Binding SelectedScheduleItem}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          Visibility="Visible">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Время"
+                                            Binding="{Binding Time}"
+                                            Width="150" />
+
+                        <DataGridTextColumn Header="Клиент"
+                                            Binding="{Binding ClientName}"
+                                            Width="*" />
+
+                        <DataGridTextColumn Header="Барбер"
+                                            Binding="{Binding BarberName}"
+                                            Width="150" />
+
+                        <DataGridTextColumn Header="Услуга"
+                                            Binding="{Binding ServiceName}"
+                                            Width="*" />
+
+                        <DataGridTextColumn Header="Статус"
+                                            Binding="{Binding StatusName}"
+                                            Width="120" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+        <Grid x:Name="ClientCardGrid"
+      Grid.Column="1"
+      Visibility="Collapsed">
+
+            <StackPanel Width="500"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" Height="458">
+
+                <Label Content="Карточка клиента"
+               FontSize="28"
+               FontWeight="Bold"
+               HorizontalContentAlignment="Center"/>
+
+                <Label Content="Фамилия"/>
+                <TextBox x:Name="txtSurname"
+                 Height="35"/>
+
+                <Label Content="Имя"/>
+                <TextBox x:Name="txtName"
+                 Height="35"/>
+
+                <Label Content="Отчество"/>
+                <TextBox x:Name="txtLastname"
+                 Height="35"/>
+
+                <Label Content="Телефон"/>
+                <TextBox x:Name="txtPhone"
+                 Height="35"/>
+
+                <Label Content="Дата рождения"/>
+                <TextBox x:Name="txtDate"
+                 Height="35"/>
+
+                <Button Content="💾 Сохранить изменения"
+                        x:Name="SaveClient" 
+                        Height="35"
+                        Click="SaveClient_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

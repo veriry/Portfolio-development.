@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище BarbershopModelContainer" CdmEntityContainer="BarbershopEntities1">
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="BarbershopModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="BarbershopModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="ID_Employee" ColumnName="ID_Employee" />
+          <ScalarProperty Name="FIO" ColumnName="FIO" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="BarbershopModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Services">
+      <EntityTypeMapping TypeName="BarbershopModel.Service">
+        <MappingFragment StoreEntitySet="Service">
+          <ScalarProperty Name="ID_Service" ColumnName="ID_Service" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Opisanie" ColumnName="Opisanie" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ID_Type_Service" ColumnName="ID_Type_Service" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Specializations">
+      <EntityTypeMapping TypeName="BarbershopModel.Specialization">
+        <MappingFragment StoreEntitySet="Specialization">
+          <ScalarProperty Name="ID_Specialization" ColumnName="ID_Specialization" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Status_Visit">
+      <EntityTypeMapping TypeName="BarbershopModel.Status_Visit">
+        <MappingFragment StoreEntitySet="Status_Visit">
+          <ScalarProperty Name="ID_Status_Visit" ColumnName="ID_Status_Visit" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Type_Service">
+      <EntityTypeMapping TypeName="BarbershopModel.Type_Service">
+        <MappingFragment StoreEntitySet="Type_Service">
+          <ScalarProperty Name="ID_Type_Service" ColumnName="ID_Type_Service" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visits">
+      <EntityTypeMapping TypeName="BarbershopModel.Visit">
+        <MappingFragment StoreEntitySet="Visit">
+          <ScalarProperty Name="ID_Visit" ColumnName="ID_Visit" />
+          <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+          <ScalarProperty Name="ID_Barber" ColumnName="ID_Barber" />
+          <ScalarProperty Name="Visit_Date" ColumnName="Visit_Date" />
+          <ScalarProperty Name="Visit_Time" ColumnName="Visit_Time" />
+          <ScalarProperty Name="Total_Duration" ColumnName="Total_Duration" />
+          <ScalarProperty Name="Total_Price" ColumnName="Total_Price" />
+          <ScalarProperty Name="ID_Status_Visit" ColumnName="ID_Status_Visit" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visit_Service">
+      <EntityTypeMapping TypeName="BarbershopModel.Visit_Service">
+        <MappingFragment StoreEntitySet="Visit_Service">
+          <ScalarProperty Name="ID_Visit" ColumnName="ID_Visit" />
+          <ScalarProperty Name="ID_Service" ColumnName="ID_Service" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Barber_Specialization" TypeName="BarbershopModel.Barber_Specialization" StoreEntitySet="Barber_Specialization">
+      <EndProperty Name="Employee">
+        <ScalarProperty Name="ID_Employee" ColumnName="ID_Barber" />
+      </EndProperty>
+      <EndProperty Name="Specialization">
+        <ScalarProperty Name="ID_Specialization" ColumnName="ID_Specialization" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="BarbershopModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

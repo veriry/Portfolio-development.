@@ -1,0 +1,42 @@
+﻿<Window x:Class="Barbershop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Barbershop"
+        mc:Ignorable="d"
+        Title="Барбершоп" Height="450" Width="800">
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <!-- Заголовок -->
+            <Label Content="Вход" FontSize="25" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+            <!-- Блок Логина -->
+            <TextBox x:Name="LoginBox" Text="" Width="306" Height="33" FontSize="16" 
+             VerticalContentAlignment="Center" Margin="0,0,0,10"/>
+
+            <!-- Блок Пароля с кнопкой -->
+            <StackPanel Orientation="Horizontal">
+                <Grid>
+                    <!-- Добавлено событие KeyDown для текстового поля пароля, чтобы Enter работал и там -->
+                    <PasswordBox x:Name="PassBox" Width="276" Height="33" FontSize="16" 
+                         VerticalContentAlignment="Center" KeyDown="PassBox_KeyDown"/>
+                    <TextBox x:Name="PassText" Visibility="Collapsed" Width="276" Height="33" 
+                     FontSize="16" VerticalContentAlignment="Center" KeyDown="PassBox_KeyDown"/>
+                </Grid>
+
+                <!-- Кнопка глаз -->
+                <Button x:Name="BtnShowPass" Content="👁" Width="30" Height="33" 
+                PreviewMouseDown="BtnShowPass_PreviewMouseDown" 
+                PreviewMouseUp="BtnShowPass_PreviewMouseUp"/>
+            </StackPanel>
+
+            <!-- Блок капчи  -->
+            <StackPanel x:Name="CaptchaBlock" Visibility="Collapsed" Margin="0,10">
+                <TextBlock x:Name="CaptchaText" Text="A1B2" FontSize="20" HorizontalAlignment="Center" Margin="0,10,0,5"/>
+                <TextBox x:Name="CaptchaInput" Width="306" Height="33" HorizontalContentAlignment="Center" FontSize="16"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище BarbershopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Barber_Specialization">
+    <Key>
+      <PropertyRef Name="ID_Barber" />
+      <PropertyRef Name="ID_Specialization" />
+    </Key>
+    <Property Name="ID_Barber" Type="int" Nullable="false" />
+    <Property Name="ID_Specialization" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ID_Client" />
+    </Key>
+    <Property Name="ID_Client" Type="int" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar" MaxLength="255" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" />
+    <Property Name="Patronymic" Type="nvarchar" MaxLength="255" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="255" />
+    <Property Name="DateOfBirth" Type="date" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="ID_Employee" />
+    </Key>
+    <Property Name="ID_Employee" Type="int" Nullable="false" />
+    <Property Name="FIO" Type="nvarchar" MaxLength="255" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="255" />
+    <Property Name="Login" Type="nvarchar" MaxLength="255" />
+    <Property Name="Password" Type="nvarchar" MaxLength="255" />
+    <Property Name="DateOfBirth" Type="date" />
+    <Property Name="ID_Role" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID_Role" />
+    </Key>
+    <Property Name="ID_Role" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="ID_Service" />
+    </Key>
+    <Property Name="ID_Service" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" />
+    <Property Name="Opisanie" Type="nvarchar" MaxLength="255" />
+    <Property Name="Duration" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ID_Type_Service" Type="int" />
+  </EntityType>
+  <EntityType Name="Specialization">
+    <Key>
+      <PropertyRef Name="ID_Specialization" />
+    </Key>
+    <Property Name="ID_Specialization" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Status_Visit">
+    <Key>
+      <PropertyRef Name="ID_Status_Visit" />
+    </Key>
+    <Property Name="ID_Status_Visit" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Type_Service">
+    <Key>
+      <PropertyRef Name="ID_Type_Service" />
+    </Key>
+    <Property Name="ID_Type_Service" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Visit">
+    <Key>
+      <PropertyRef Name="ID_Visit" />
+    </Key>
+    <Property Name="ID_Visit" Type="int" Nullable="false" />
+    <Property Name="ID_Client" Type="int" />
+    <Property Name="ID_Barber" Type="int" />
+    <Property Name="Visit_Date" Type="date" />
+    <Property Name="Visit_Time" Type="time" Precision="7" />
+    <Property Name="Total_Duration" Type="int" />
+    <Property Name="Total_Price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ID_Status_Visit" Type="int" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Visit_Service">
+    <Key>
+      <PropertyRef Name="ID_Visit" />
+      <PropertyRef Name="ID_Service" />
+    </Key>
+    <Property Name="ID_Visit" Type="int" Nullable="false" />
+    <Property Name="ID_Service" Type="int" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <Association Name="FK_BarberSpec_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Barber_Specialization" Type="Self.Barber_Specialization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="ID_Employee" />
+      </Principal>
+      <Dependent Role="Barber_Specialization">
+        <PropertyRef Name="ID_Barber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BarberSpec_Specialization">
+    <End Role="Specialization" Type="Self.Specialization" Multiplicity="1" />
+    <End Role="Barber_Specialization" Type="Self.Barber_Specialization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialization">
+        <PropertyRef Name="ID_Specialization" />
+      </Principal>
+      <Dependent Role="Barber_Specialization">
+        <PropertyRef Name="ID_Specialization" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="ID_Role" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="ID_Role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Service_Type">
+    <End Role="Type_Service" Type="Self.Type_Service" Multiplicity="0..1" />
+    <End Role="Service" Type="Self.Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type_Service">
+        <PropertyRef Name="ID_Type_Service" />
+      </Principal>
+      <Dependent Role="Service">
+        <PropertyRef Name="ID_Type_Service" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visit_Barber">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="ID_Employee" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="ID_Barber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visit_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+    <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ID_Client" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="ID_Client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visit_Status">
+    <End Role="Status_Visit" Type="Self.Status_Visit" Multiplicity="0..1" />
+    <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status_Visit">
+        <PropertyRef Name="ID_Status_Visit" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="ID_Status_Visit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VisitServ_Service">
+    <End Role="Service" Type="Self.Service" Multiplicity="1" />
+    <End Role="Visit_Service" Type="Self.Visit_Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="ID_Service" />
+      </Principal>
+      <Dependent Role="Visit_Service">
+        <PropertyRef Name="ID_Service" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VisitServ_Visit">
+    <End Role="Visit" Type="Self.Visit" Multiplicity="1" />
+    <End Role="Visit_Service" Type="Self.Visit_Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Visit">
+        <PropertyRef Name="ID_Visit" />
+      </Principal>
+      <Dependent Role="Visit_Service">
+        <PropertyRef Name="ID_Visit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище BarbershopModelContainer">
+    <EntitySet Name="Barber_Specialization" EntityType="Self.Barber_Specialization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Specialization" EntityType="Self.Specialization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Status_Visit" EntityType="Self.Status_Visit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Type_Service" EntityType="Self.Type_Service" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Visit" EntityType="Self.Visit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Visit_Service" EntityType="Self.Visit_Service" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BarberSpec_Employee" Association="Self.FK_BarberSpec_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Barber_Specialization" EntitySet="Barber_Specialization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BarberSpec_Specialization" Association="Self.FK_BarberSpec_Specialization">
+      <End Role="Specialization" EntitySet="Specialization" />
+      <End Role="Barber_Specialization" EntitySet="Barber_Specialization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Service_Type" Association="Self.FK_Service_Type">
+      <End Role="Type_Service" EntitySet="Type_Service" />
+      <End Role="Service" EntitySet="Service" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visit_Barber" Association="Self.FK_Visit_Barber">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Visit" EntitySet="Visit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visit_Client" Association="Self.FK_Visit_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Visit" EntitySet="Visit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visit_Status" Association="Self.FK_Visit_Status">
+      <End Role="Status_Visit" EntitySet="Status_Visit" />
+      <End Role="Visit" EntitySet="Visit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VisitServ_Service" Association="Self.FK_VisitServ_Service">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="Visit_Service" EntitySet="Visit_Service" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VisitServ_Visit" Association="Self.FK_VisitServ_Visit">
+      <End Role="Visit" EntitySet="Visit" />
+      <End Role="Visit_Service" EntitySet="Visit_Service" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
