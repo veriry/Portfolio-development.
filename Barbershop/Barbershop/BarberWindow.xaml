@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="Барбер" Height="450" Width="800">
     <Grid>
-        
+        <TextBlock HorizontalAlignment="Center" FontSize="36" TextWrapping="Wrap" Text="Интерфейс барбера в процессе разработки. Приносим свои извенения" VerticalAlignment="Center" Width="748"/>
     </Grid>
 </Window>

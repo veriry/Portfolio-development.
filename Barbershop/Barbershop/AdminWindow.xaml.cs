@@ -31,7 +31,7 @@ namespace Barbershop
             InitializeComponent();
             _user = user;
 
-            txtUser.Text = "Соловаров Максим Максимович";//$"{_user.FIO}";
+            txtUser.Text = $"{_user.FIO}";
             txtRole.Text = "Администратор";
             _selectedDate = DateTime.Today;
 
